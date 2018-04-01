@@ -4,9 +4,16 @@ namespace Code\App\Entities;
 
 class Cliente
 {
+    private $id;
 
     private $cliente;
+    
     private $email;
+    
+    function getId()
+    {
+        return $this->id;
+    }
 
     function getCliente()
     {
@@ -16,6 +23,12 @@ class Cliente
     function getEmail()
     {
         return $this->email;
+    }
+
+    function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     function setCliente($cliente)
@@ -29,5 +42,6 @@ class Cliente
         $this->email = $email;
         return $this;
     }
+
 
 }

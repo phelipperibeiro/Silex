@@ -25,9 +25,28 @@ class ClienteService
         return $this->clienteMapper->insert($this->cliente);
     }
 
+    public function update(array $data)
+    {
+        $this->cliente->setId($data['id']);
+        $this->cliente->setCliente($data['nome']);
+        $this->cliente->setEmail($data['email']);
+
+        return $this->clienteMapper->update($this->cliente);
+    }
+
     public function fetchAll()
     {
         return $this->clienteMapper->fetchAll();
+    }
+
+    public function find($id)
+    {
+        return $this->clienteMapper->find($id);
+    }
+    
+    public function delete($id)
+    {
+        return $this->clienteMapper->delete($id);
     }
 
 }
