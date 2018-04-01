@@ -1,0 +1,28 @@
+{# Layout Twig template #}
+
+<html>
+    <head>
+        <title>{% block titulo %} Titulo {% endblock %}</title>
+    </head>
+    <body>
+        <di>
+            {% block app %}
+               <h1>app layout</h1>
+            {% endblock %}
+        </di>
+
+        <di>
+            {% block conteudo %}
+                <h3>conteudo layout</h3>
+            {% endblock %}
+        </di>
+        
+        <di>
+            {% block conteudo2 %}
+                
+            {% endblock %}
+        </di>
+
+        <footer>Todos os direitos reservados</footer>
+    </body>
+</html>
