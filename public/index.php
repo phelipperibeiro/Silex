@@ -1,17 +1,6 @@
 <?php
 
-################################Config##############################
-//php -S localhost:8888 -t public/ # servidor embutido
-require_once(__DIR__ . '/../vendor/autoload.php');
-
-$app = new \Silex\Application();
-
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__ . '/../src/Code/App/Views',
-));
-
-$app['debug'] = true;
-################################Config##############################
+require_once('./bootstrap.php');
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
