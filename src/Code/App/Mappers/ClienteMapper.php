@@ -3,9 +3,17 @@
 namespace Code\App\Mappers;
 
 use Code\App\Entities\Cliente;
+use Doctrine\ORM\EntityManager;
 
 class ClienteMapper
 {
+
+    private $entityManager;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     private $dados = [
         ['id' => 1, 'nome' => 'Cliente XPTO', 'email' => 'cliente_xpto@htomail.com'],
@@ -20,8 +28,14 @@ class ClienteMapper
 
     public function insert(Cliente $cliente)
     {
+        $this->entityManager->persist($cliente);
+        $this->entityManager->flush();
+
         return [
-            'sucess' => 'true'
+            'sucess' => 'true',
+            'id' => $cliente->getId(),
+            'cliente' => $cliente->getCliente(),
+            'email' => $cliente->getEmail()
         ];
     }
 

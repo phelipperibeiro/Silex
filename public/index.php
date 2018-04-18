@@ -11,10 +11,10 @@ use Code\App\Services\ClienteService;
 $response = new Response();
 
 // pimple DI
-$app['clienteService'] = function () {
+$app['clienteService'] = function () use ($entityManager) {
 
     $cliente = new Cliente();
-    $clienteMapper = new ClienteMapper();
+    $clienteMapper = new ClienteMapper($entityManager);
     $clienteService = new ClienteService($cliente, $clienteMapper);
 
     return $clienteService;
@@ -34,7 +34,7 @@ $app->get("/api/clientes/{id}", function($id) use ($app) {
 
 $app->post("/api/clientes", function(Request $request) use ($app) {
 
-    $dados['nome'] = $request->get('nome');
+    $dados['cliente'] = $request->get('nome');
     $dados['email'] = $request->get('email');
 
     return $app->json($app['clienteService']->insert($dados));
@@ -48,7 +48,7 @@ $app->delete("/api/clientes/{id}", function($id) use ($app) {
 $app->put("/api/clientes/{id}", function($id, Request $request) use ($app) {
 
     $dados['id'] = $id;
-    $dados['nome'] = $request->get('nome');
+    $dados['cliente'] = $request->get('nome');
     $dados['email'] = $request->get('email');
 
     $dados = $app['clienteService']->update($dados);
@@ -80,14 +80,14 @@ $app->get("/clientes", function() use($app) {
     return $app['twig']->render('clientes.twig', ['clientes' => $dados]);
 });
 
-$app->get("/cliente", function() use($app) {
-
-    $dados['nome'] = "Cliente";
-    $dados['email'] = "cliente@hotmail.com";
-
-    $result = $app['clienteService']->insert($dados);
-
-    return $app->json($result);
-});
+//$app->get("/cliente", function() use($app) {
+//
+//    $dados['cliente'] = "Cliente";
+//    $dados['email'] = "cliente@hotmail.com";
+//
+//    $result = $app['clienteService']->insert($dados);
+//
+//    return $app->json($result);
+//});
 
 $app->run();

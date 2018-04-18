@@ -19,7 +19,7 @@ class ClienteService
 
     public function insert(array $data)
     {
-        $this->cliente->setCliente($data['nome']);
+        $this->cliente->setCliente($data['cliente']);
         $this->cliente->setEmail($data['email']);
 
         return $this->clienteMapper->insert($this->cliente);
@@ -28,7 +28,7 @@ class ClienteService
     public function update(array $data)
     {
         $this->cliente->setId($data['id']);
-        $this->cliente->setCliente($data['nome']);
+        $this->cliente->setCliente($data['cliente']);
         $this->cliente->setEmail($data['email']);
 
         return $this->clienteMapper->update($this->cliente);
