@@ -2,6 +2,11 @@
 
 //php -S localhost:8888 -t public/ # servidor embutido
 
+// # testing  doctrine is console 
+// the command is (php bin/doctrine)
+// create cli-config.php file inside bin folder
+// to execute the doctrine in bash, you must be in the same folder where the cli-config.php file is (usually inside bin folder)
+
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 #########################################Doctrine#####################################
@@ -21,24 +26,27 @@ $cache = new Doctrine\Common\Cache\ArrayCache;
 $annotationReader = new Doctrine\Common\Annotations\AnnotationReader;
 
 $cachedAnnotationReader = new Doctrine\Common\Annotations\CachedReader(
-        $annotationReader, $cache
+        $annotationReader, // use reader
+        $cache // and a cache driver
 );
 
 $annotationDrive = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
-        $cachedAnnotationReader, array(__DIR__ . DIRECTORY_SEPARATOR . '../src')
+        $cachedAnnotationReader,  // our cached annotation reader
+        array(__DIR__ . DIRECTORY_SEPARATOR . '../src')
 );
 
-$driveChain = new Doctrine\ORM\Mapping\Driver\DriverChain();
-$driveChain->addDriver($annotationDrive, "Code");
+$driveChain = new Doctrine\ORM\Mapping\Driver\DriverChain(); 
+$driveChain->addDriver($annotationDrive, "Code"); // register our main namespace 
 
 
 $config = new Doctrine\ORM\Configuration();
-$config->setProxyDir("/tmp");
-$config->setProxyNamespace("Proxy");
-$config->setAutoGenerateProxyClasses(true);
+$config->setProxyDir("/tmp"); // where is our proxy dir
+$config->setProxyNamespace("Proxy"); //
+$config->setAutoGenerateProxyClasses(true); // this can be based on production config
 
+// register meta data driver
 $config->setMetadataDriverImpl($driveChain);
-
+//use our allready initialized cache driver
 $config->setMetadataCacheImpl($cache);
 $config->setQueryCacheImpl($cache);
 
@@ -52,12 +60,13 @@ AnnotationRegistry::registerFile($pathAnnotationRegistry);
 
 $eventManager = new Doctrine\Common\EventManager();
 
+// here is where the doctrine manager all tables
 $entityManager = EntityManager::Create(array(
             'driver' => 'pdo_mysql',
             'host' => 'localhost',
             'port' => '3306',
             'user' => 'root',
-            'password' => 'root',
+            'password' => '2345678',
             'dbname' => 'doctrine_db'), $config, $eventManager);
 
 
