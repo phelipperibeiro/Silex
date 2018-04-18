@@ -30,7 +30,7 @@ class ClienteService
         $this->cliente->setId($data['id']);
         $this->cliente->setCliente($data['cliente']);
         $this->cliente->setEmail($data['email']);
-
+        
         return $this->clienteMapper->update($this->cliente);
     }
 

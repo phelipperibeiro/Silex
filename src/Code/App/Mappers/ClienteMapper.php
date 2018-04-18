@@ -41,13 +41,22 @@ class ClienteMapper
 
     public function update(Cliente $cliente)
     {
+        $this->entityManager->merge($cliente);
+        $this->entityManager->flush();
+
         return [
-            'sucess' => 'true'
+            'sucess' => 'true',
+            'id' => $cliente->getId(),
+            'cliente' => $cliente->getCliente(),
+            'email' => $cliente->getEmail()
         ];
     }
 
     public function delete($id)
-    {
+    {   
+        $this->entityManager->delete($cliente);
+        $this->entityManager->flush();
+
         return [
             'sucess' => 'true'
         ];
