@@ -59,8 +59,8 @@ $pathAnnotationRegistry = __DIR__ . DIRECTORY_SEPARATOR . '../vendor' . DIRECTOR
 AnnotationRegistry::registerFile($pathAnnotationRegistry);
 
 $eventManager = new Doctrine\Common\EventManager();
-
-// here is where the doctrine manager all tables
+    
+// here is where doctrine manages all tables
 $entityManager = EntityManager::Create(array(
             'driver' => 'pdo_mysql',
             'host' => 'localhost',
