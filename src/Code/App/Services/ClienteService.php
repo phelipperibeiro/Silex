@@ -2,51 +2,64 @@
 
 namespace Code\App\Services;
 
-use Code\App\Mappers\ClienteMapper;
-use Code\App\Entities\Cliente;
+use Code\App\Entities\Cliente as ClienteEntity;
+use Doctrine\ORM\EntityManager;
 
 class ClienteService
 {
 
-    private $cliente;
-    private $clienteMapper;
+    private $entityManager;
 
-    public function __construct(Cliente $cliente, ClienteMapper $clienteMapper)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->cliente = $cliente;
-        $this->clienteMapper = $clienteMapper;
+        $this->entityManager = $entityManager;
     }
 
     public function insert(array $data)
     {
-        $this->cliente->setCliente($data['cliente']);
-        $this->cliente->setEmail($data['email']);
+        $clienteEntity = new ClienteEntity();
+        $clienteEntity->setCliente($data['cliente']);
+        $clienteEntity->setEmail($data['email']);
 
-        return $this->clienteMapper->insert($this->cliente);
+        $this->entityManager->persist($clienteEntity);
+        $this->entityManager->flush();
+
+        return $clienteEntity;
     }
 
     public function update(array $data)
     {
-        $this->cliente->setId($data['id']);
-        $this->cliente->setCliente($data['cliente']);
-        $this->cliente->setEmail($data['email']);
-        
-        return $this->clienteMapper->update($this->cliente);
+        //$repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
+        //$clienteEntity = $repository->find($data['id']);
+
+        $clienteEntity = $this->entityManager->getReference("Code\App\Entities\Cliente", $data['id']);
+
+        $clienteEntity->setCliente($data['cliente']);
+        $clienteEntity->setEmail($data['email']);
+
+        $this->entityManager->persist($clienteEntity);
+        $this->entityManager->flush();
+
+        return $clienteEntity;
     }
 
     public function fetchAll()
     {
-        return $this->clienteMapper->fetchAll();
+        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
+        return $repository->findAll();
     }
 
     public function find($id)
     {
-        return $this->clienteMapper->find($id);
+        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
+        return $repository->find($id);
     }
-    
+
     public function delete($id)
     {
-        return $this->clienteMapper->delete($id);
+        $clienteEntity = $this->entityManager->getReference("Code\App\Entities\Cliente", $data['id']);
+        $this->entityManager->persist($clienteEntity);
+        return true;
     }
 
 }

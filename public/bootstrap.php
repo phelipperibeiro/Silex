@@ -66,7 +66,7 @@ $entityManager = EntityManager::Create(array(
             'host' => 'localhost',
             'port' => '3306',
             'user' => 'root',
-            'password' => '2345678',
+            'password' => '123456',
             'dbname' => 'doctrine_db'), $config, $eventManager);
 
 

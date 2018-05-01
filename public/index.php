@@ -4,19 +4,15 @@ require_once('./bootstrap.php');
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Code\App\Entities\Cliente;
-use Code\App\Mappers\ClienteMapper;
 use Code\App\Services\ClienteService;
 
 $response = new Response();
 
 // pimple DI
 $app['clienteService'] = function () use ($entityManager) {
-
-    $cliente = new Cliente();
-    $clienteMapper = new ClienteMapper($entityManager);
-    $clienteService = new ClienteService($cliente, $clienteMapper);
-
+    
+    $clienteService = new ClienteService($entityManager);
+    
     return $clienteService;
 };
 
