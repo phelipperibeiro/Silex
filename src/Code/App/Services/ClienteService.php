@@ -45,13 +45,15 @@ class ClienteService
 
     public function fetchAll()
     {
-        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
+        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");       
         return $repository->findAll();
     }
 
     public function find($id)
     {
         $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
+        //$repository->findBy(['cliente' => 'felipe' , 'email' => 'flp@movida.com.br']);
+        //$repository->findByCliente('felipe');
         return $repository->find($id);
     }
 

@@ -1,11 +1,15 @@
 <?php
 
-//php -S localhost:8888 -t public/ # servidor embutido
-
+//
+// php -S localhost:8888 -t public/ # servidor embutido
+//
 // # testing  doctrine is console 
 // the command is (php bin/doctrine)
 // create cli-config.php file inside bin folder
 // to execute the doctrine in bash, you must be in the same folder where the cli-config.php file is (usually inside bin folder)
+// exemplo
+// php doctrine
+// php doctrine orm:run-dql "select c from Code\App\Entities\Cliente c"
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
