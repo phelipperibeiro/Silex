@@ -33,6 +33,12 @@ class Cliente
      * @ORM\JoinColumn(name="cliente_profile", referencedColumnName="id")
      */
     private $profile;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Code\App\Entities\Cupom") 
+     * @ORM\JoinColumn(name="cupom_id", referencedColumnName="id")
+     */
+    private $cupom;
 
     function getId()
     {
