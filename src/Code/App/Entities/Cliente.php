@@ -3,6 +3,7 @@
 namespace Code\App\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Code\App\Entities\ClienteRepository")
@@ -33,12 +34,28 @@ class Cliente
      * @ORM\JoinColumn(name="cliente_profile", referencedColumnName="id")
      */
     private $profile;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Code\App\Entities\Cupom") 
      * @ORM\JoinColumn(name="cupom_id", referencedColumnName="id")
      */
     private $cupom;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Code\App\Entities\Interesse") 
+     * @ORM\JoinTable(name="clientes_interesses",
+     *      joinColumns={@ORM\JoinColumn(name="cliente_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="interesse_id", referencedColumnName="id")}, 
+     *      )    
+     */
+    private $interesses;
+    
+    
+    public function __construct()
+    {
+        $this->interesses = new ArrayCollection();
+    }
+    
 
     function getId()
     {
@@ -58,6 +75,16 @@ class Cliente
     public function getProfile()
     {
         return $this->profile;
+    }
+
+    public function getCupom()
+    {
+        return $this->cupom;
+    }
+
+    public function getInteresses()
+    {
+        return $this->interesses;
     }
 
     function setId($id)
@@ -83,5 +110,17 @@ class Cliente
         $this->email = $email;
         return $this;
     }
+    
+    public function setCupom($cupom)
+    {
+        $this->cupom = $cupom;
+        return $this;
+    }
 
+    public function addInteresse($interesses)
+    {
+        $this->interesses->add($interesses);
+        return $this;
+    }
+    
 }
