@@ -32,6 +32,8 @@ $app->post("/api/clientes", function(Request $request) use ($app) {
 
     $dados['cliente'] = $request->get('nome');
     $dados['email'] = $request->get('email');
+    $dados['rg'] = $request->get('rg');
+    $dados['cpf'] = $request->get('cpf');
 
     return $app->json($app['clienteService']->insert($dados));
 });

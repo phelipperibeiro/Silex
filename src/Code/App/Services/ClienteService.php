@@ -3,6 +3,7 @@
 namespace Code\App\Services;
 
 use Code\App\Entities\Cliente as ClienteEntity;
+use Code\App\Entities\ClienteProfile as ClienteProfileEntity;
 use Doctrine\ORM\EntityManager;
 
 class ClienteService
@@ -20,6 +21,18 @@ class ClienteService
         $clienteEntity = new ClienteEntity();
         $clienteEntity->setCliente($data['cliente']);
         $clienteEntity->setEmail($data['email']);
+
+        if (isset($data['rg']) AND isset($data['cpf'])) {
+            
+            $clienteProfileEntity = new ClienteProfileEntity();
+            $clienteProfileEntity->setCpf($data['cpf']);
+            $clienteProfileEntity->setRg($data['rg']);
+            $this->entityManager->persist($clienteProfileEntity);
+            
+            // Faz o relacionamento
+            $clienteEntity->setProfile($clienteProfileEntity);
+            
+        }
 
         $this->entityManager->persist($clienteEntity);
         $this->entityManager->flush();
@@ -45,7 +58,7 @@ class ClienteService
 
     public function fetchAll()
     {
-        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");       
+        $repository = $this->entityManager->getRepository("Code\App\Entities\Cliente");
         return $repository->findAll();
     }
 
