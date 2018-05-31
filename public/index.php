@@ -5,6 +5,7 @@ require_once('./bootstrap.php');
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Code\App\Services\ClienteService;
+use Code\App\Services\InteresseService;
 
 $response = new Response();
 
@@ -14,6 +15,13 @@ $app['clienteService'] = function () use ($entityManager) {
     $clienteService = new ClienteService($entityManager);
     
     return $clienteService;
+};
+
+$app['interesseService'] = function () use ($entityManager) {
+    
+    $interesseService = new InteresseService($entityManager);
+    
+    return $interesseService;
 };
 
 ##################################API###################################
@@ -36,6 +44,13 @@ $app->post("/api/clientes", function(Request $request) use ($app) {
     $dados['cpf'] = $request->get('cpf');
 
     return $app->json($app['clienteService']->insert($dados));
+});
+
+$app->post("/api/interesses", function(Request $request) use ($app) {
+
+    $dados['nome'] = $request->get('nome');
+
+    return $app->json($app['interesseService']->insert($dados));
 });
 
 $app->delete("/api/clientes/{id}", function($id) use ($app) {
