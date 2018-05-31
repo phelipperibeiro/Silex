@@ -23,15 +23,23 @@ class ClienteService
         $clienteEntity->setEmail($data['email']);
 
         if (isset($data['rg']) AND isset($data['cpf'])) {
-            
+
             $clienteProfileEntity = new ClienteProfileEntity();
             $clienteProfileEntity->setCpf($data['cpf']);
             $clienteProfileEntity->setRg($data['rg']);
             $this->entityManager->persist($clienteProfileEntity);
-            
+
             // Faz o relacionamento
             $clienteEntity->setProfile($clienteProfileEntity);
-            
+        }
+
+        if (isset($data['interesse'])) {
+            $interesses = explode(",", $data['interesse']);
+
+            foreach ($interesses as $key => $interesse) {
+                $interesseEntity = $this->entityManager->getReference("Code\App\Entities\Interesse", $interesse);
+                $clienteEntity->addInteresse($interesseEntity);
+            }
         }
 
         $this->entityManager->persist($clienteEntity);

@@ -117,9 +117,9 @@ class Cliente
         return $this;
     }
 
-    public function addInteresse($interesses)
+    public function addInteresse($interesse)
     {
-        $this->interesses->add($interesses);
+        $this->interesses->add($interesse);
         return $this;
     }
     
