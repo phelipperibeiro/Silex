@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Code\App\Entities\ClienteRepository")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="clientes")
  */
 class Cliente
@@ -51,11 +52,24 @@ class Cliente
     private $interesses;
     
     
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+    
+
     public function __construct()
     {
         $this->interesses = new ArrayCollection();
     }
     
+    /**
+     * @ORM\PrePersist
+     */
+    public function setupDate()
+    {        
+        $this->created_at = new \DateTime();
+    }
 
     function getId()
     {
